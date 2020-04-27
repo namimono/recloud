@@ -1,0 +1,30 @@
+
+dependencies {
+    //关于dubbo的依赖请参考apache dubbo的github而不是apache官网
+    //https://github.com/apache/dubbo-spring-boot-project/blob/master/README_CN.md
+    implementation ("org.apache.dubbo:dubbo"){
+        exclude group:'org.springframework',module:'spring'
+        exclude group:'javax.servlet',module:'servlet-api'
+        exclude group:'log4j',module:'log4j'
+    }
+    implementation "org.apache.dubbo:dubbo-spring-boot-starter"
+
+    //将dubbo注册到nacos所需要的依赖
+    implementation 'org.apache.dubbo:dubbo-registry-nacos'
+    implementation 'com.alibaba.nacos:nacos-client'
+    implementation 'com.alibaba.spring:spring-context-support:1.0.2'
+
+    //druid
+    implementation 'com.alibaba:druid-spring-boot-starter:1.1.10'
+    //tk mapper
+    implementation 'tk.mybatis:mapper-spring-boot-starter:2.1.5'
+    //fastjson
+    implementation 'com.alibaba:fastjson:1.2.56'
+    //mysql
+    implementation 'mysql:mysql-connector-java'
+
+    /**
+     * 导入api依赖
+     */
+    implementation project(':user-provider-api')
+}

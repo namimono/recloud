@@ -1,0 +1,15 @@
+#访问地址，端口
+server:
+  port: 8093
+  #配置tomcat
+  tomcat:
+    max-threads: 300
+
+
+#定义服务名
+spring:
+  application:
+    name: reKuberTest
+  main:
+    allow-bean-definition-overriding: true
+

@@ -1,0 +1,56 @@
+//此处只是引入插件,具体哪个项目用哪个插件,需要allprojects和subprojects 块决定
+plugins {
+    id 'org.springframework.boot' version '2.2.1.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE' apply false
+    id 'java'
+}
+
+ext {
+    springCloudAlibabaDependency = '2.1.0.RELEASE'
+    ioSpringPlatform = 'Brussels-SR17'
+    dubboVersion = '2.7.3'
+    nakmiProVersion = '1.0-SNAPSHOT'
+    lombokVersion = '1.18.10'
+}
+allprojects {
+    apply plugin: 'java'
+    group 'com.nakami'
+    version '1.0-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        mavenCentral()
+    }
+
+}
+
+subprojects {
+    //如果子项目是re开头的说明是springbooot项目
+    //这里很重要,因为有的java程序不需要使用springboot,但是引入了springboot插件会导致打包的时候按照springboot的
+    //方式打包,本来只需要一个简单的jar即可，这样会导致无法正确找到所依赖的类,所以需要根据程序来使用springboot插件.
+    if (name.startsWith('re')){
+        apply plugin: 'org.springframework.boot'
+        apply plugin: 'io.spring.dependency-management'
+
+        dependencies {
+            //添加apache dubbo 统一依赖管理
+            implementation platform("org.apache.dubbo:dubbo-dependencies-bom:${this.dubboVersion}")
+            //添加springcloud alibaba统一依赖管理
+            implementation platform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${this.springCloudAlibabaDependency}")
+            //添加spring io 进行spring统一依赖管理
+            implementation platform("io.spring.platform:platform-bom:${this.ioSpringPlatform}")
+            implementation('org.springframework.boot:spring-boot-starter')
+            implementation('org.springframework.boot:spring-boot-starter-web')
+            implementation('org.springframework.boot:spring-boot-starter-test')
+
+        }
+    }
+}
+

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+#创建类型为Deployment
+kind: Deployment
+#Deployment的名字
+metadata:
+  name: re-kuber
+spec:
+  selector:
+    matchLabels:
+      app: re-kuber
+  #Number of desired pods. This is a pointer to distinguish between explicit
+  #zero and not specified. Defaults to 1
+  replicas: 2
+  template:
+    #pod name and labels
+    metadata:
+      labels:
+        app: re-kuber
+    spec:
+      containers:
+        - name: re-kuber
+          image: registry.cn-qingdao.aliyuncs.com/namimono/re-kuber:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8093
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: re-kuber
+  labels:
+    svc: re-kuber
+spec:
+  ports:
+    - port: 8093
+      targetPort: 8093
+      protocol: TCP
+  selector:
+    app: re-kuber

@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: second-cloud-ingress
+spec:
+#  tls:
+#  - hosts:
+#    - nakami.test.com
+#    secretName: cafe-secret
+  rules:
+  - host: nakami.test.com
+    http:
+      paths:
+      - path: /consumer
+        backend:
+          serviceName: consumer
+          servicePort: 9000
+#      - path: /coffee
+#        backend:
+#          serviceName: coffee-svc
+#          servicePort: 80

@@ -1,0 +1,78 @@
+#访问地址，端口
+server:
+  port: 8092
+  #配置tomcat
+  tomcat:
+    max-threads: 300
+
+#注册dubbo到nacos
+dubbo:
+  registry:
+    address: nacos://localhost:8848
+    check: false
+  scan:
+    base-packages: com.nakami.recloud.userprovider
+  protocol:
+    name: dubbo
+    port: -1
+
+#定义服务名
+spring:
+  application:
+    name: user-provider
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/db_bookstore?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password:
+    druid:
+      filter:
+        wall:
+          config:
+            multi-statement-allow: true
+            none-base-statement-allow: true
+      filters: stat,log4j2
+  #  redis:
+  #    host: 127.0.0.1
+  #    port: 6379
+  #    jedis:
+  #      pool:
+  #        max-idle: 50
+  #        max-active: 1000
+  #        min-idle: 5
+  #        max-wait: -1
+  #    database: 0
+  #    password: ''
+  #    timeout: 3600
+  #  redis:
+  #    jedis:
+  #      pool:
+  #        max-idle: 50
+  #        max-active: 1000
+  #        min-idle: 5
+  #        max-wait: -1
+  #    cluster:
+  #      nodes: 192.168.0.131:6379, 192.168.0.133:6379, 192.168.0.134:6379, 192.168.0.135:6379
+
+
+
+#mybatis
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+#指定log4j2的配置文件
+#logging:
+#  config: classpath:log4j2-dev.xml
+
+
+
+
+

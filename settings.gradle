@@ -1,0 +1,5 @@
+rootProject.name = 'recloud'
+include 're-user-provider'
+include 'user-provider-api'
+include 're-kuberTest'
+
